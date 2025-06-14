@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8" />
+    <title>วิเคราะห์ความเข้มข้นไนไตรต์</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet" />
+    <style>
+        /* Reset */
+        * {
+            box-sizing: border-box;
+        }
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Kanit', sans-serif;
+            background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #222;
+        }
+
+        .card {
+            background: #fff;
+            max-width: 480px;
+            width: 100%;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+            padding: 36px 32px 48px 32px;
+            text-align: center;
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+            animation: fadeInScale 0.6s ease forwards;
+        }
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 28px 48px rgba(0,0,0,0.18);
+        }
+
+        h1 {
+            margin: 0 0 10px;
+            color: #0078a0;
+            font-weight: 700;
+            font-size: 2.8rem;
+            text-shadow: 1px 1px 5px rgba(0,120,160,0.25);
+        }
+        p.subtitle {
+            margin: 0 0 30px;
+            font-size: 1.15rem;
+            color: #555;
+            line-height: 1.4;
+        }
+
+        /* File input */
+        input[type="file"] {
+            display: none;
+        }
+        label.upload-btn {
+            display: inline-block;
+            background: #009688;
+            color: #fff;
+            padding: 15px 36px;
+            font-size: 1.2rem;
+            border-radius: 14px;
+            cursor: pointer;
+            user-select: none;
+            box-shadow: 0 6px 20px rgba(0,150,136,0.4);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 28px;
+            font-weight: 600;
+        }
+        label.upload-btn:hover {
+            background: #00796b;
+            box-shadow: 0 9px 30px rgba(0,120,107,0.6);
+        }
+
+        /* Mode selection */
+        .mode-select {
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+            color: #444;
+            user-select: none;
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+        }
+        .mode-select label {
+            cursor: pointer;
+            font-weight: 600;
+            color: #00796b;
+            transition: color 0.3s ease;
+        }
+        .mode-select input[type="radio"] {
+            margin-right: 8px;
+            cursor: pointer;
+        }
+        .mode-select label:hover {
+            color: #004d40;
+        }
+
+        /* Preview */
+        #preview {
+            margin: 0 auto 32px auto;
+            width: 280px;
+            height: 280px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+            background: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s ease;
+            color: #999;
+            font-size: 1rem;
+            user-select: none;
+            opacity: 1;
+            animation: fadeIn 0.6s ease forwards;
+        }
+        #preview img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 20px;
+            animation: fadeIn 0.8s ease forwards;
+        }
+        #preview.empty {
+            /* when empty, keep color and opacity */
+            opacity: 1;
+        }
+
+        /* Submit button */
+        button.submit-btn {
+            width: 100%;
+            padding: 16px 0;
+            background: #00796b;
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            font-size: 1.25rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 10px 28px rgba(0,120,107,0.5);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        button.submit-btn:hover {
+            background: #004d40;
+            box-shadow: 0 14px 36px rgba(0,77,64,0.7);
+        }
+
+        /* Result box */
+        .result-container {
+            margin-top: 40px;
+            background: #e0f2f1;
+            border-radius: 20px;
+            padding: 24px 28px;
+            color: #004d40;
+            font-weight: 600;
+            font-size: 1.3rem;
+            box-shadow: 0 8px 24px rgba(0,77,64,0.15);
+            line-height: 1.5;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            animation: fadeIn 1s ease 0.3s forwards;
+            opacity: 0;
+        }
+        .result-label {
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+            color: #00796b;
+            text-align: center;
+        }
+        .color-box {
+            display: inline-block;
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            margin-left: 15px;
+            vertical-align: middle;
+            box-shadow: 0 0 10px rgba(0,0,0,0.15);
+            border: 3px solid #b2dfdb;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .card {
+                max-width: 100%;
+                padding: 28px 20px 40px 20px;
+            }
+            h1 {
+                font-size: 2.2rem;
+            }
+            .mode-select {
+                gap: 24px;
+                font-size: 1rem;
+            }
+            button.submit-btn {
+                font-size: 1.1rem;
+                padding: 14px 0;
+            }
+            #preview {
+                width: 220px;
+                height: 220px;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {opacity: 0; transform: translateY(10px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+        @keyframes fadeInScale {
+            from {opacity: 0; transform: scale(0.95);}
+            to {opacity: 1; transform: scale(1);}
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>วิเคราะห์ความเข้มข้นไนไตรต์</h1>
+        <p class="subtitle">อัปโหลดรูปภาพปัสสาวะของคุณเพื่อตรวจวัดความเข้มข้นไนไตรต์อย่างแม่นยำ</p>
+
+        <form method="POST" action="{{ url_for('upload') }}" enctype="multipart/form-data">
+            <input type="file" id="imageInput" name="image" accept="image/*" required onchange="previewImage(event)">
+            <label for="imageInput" class="upload-btn">📷 เลือกรูปภาพหรือถ่ายภาพ</label>
+
+            <div class="mode-select">
+                <label><input type="radio" name="mode" value="yellow" checked> โหมด Yellow Nitrite</label>
+                <label><input type="radio" name="mode" value="white"> โหมด White Nitrite</label>
+            </div>
+
+            <div id="preview" class="empty">ยังไม่มีรูปภาพ</div>
+
+            <button type="submit" class="submit-btn">🔍 วิเคราะห์</button>
+        </form>
+
+        {% if urine_result and nitrite_result %}
+        <div class="result-container">
+            <div class="result-label">ผลวิเคราะห์สีปัสสาวะ</div>
+            <div>
+                {{ urine_result }}
+                <span class="color-box" style="background-color: rgb({{ rgb[0]|int }}, {{ rgb[1]|int }}, {{ rgb[2]|int }});"></span>
+            </div>
+
+            <div class="result-label" style="margin-top: 28px;">ผลวิเคราะห์ไนไตรต์</div>
+            <div>{{ nitrite_result }}</div>
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        function previewImage(event) {
+            const preview = document.getElementById('preview');
+            preview.innerHTML = "";
+            preview.classList.remove('empty');
+
+            const file = event.target.files[0];
+            if (!file) {
+                preview.classList.add('empty');
+                preview.textContent = "ยังไม่มีรูปภาพ";
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                preview.appendChild(img);
+            }
+            reader.readAsDataURL(file);
+        }
+    </script>
+</body>
+</html>
