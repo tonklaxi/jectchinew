@@ -99,15 +99,19 @@
 </head>
 <body>
     <div class="container">
-        <h1>ผลวิเคราะห์สีปัสสาวะ</h1>
+        <h1>วิเคราะห์ปริมาณไนไตรต์</h1>
 
         <img src="{{ image_url }}" alt="Uploaded Image">
 
         <div class="result-box">
-            ผลวิเคราะห์ไนไตรต์: {{ nitrite_result }}
+            ปริมาณไนไตรต์: {{ nitrite_value }} mg/mL
         </div>
 
-        <div class="rgb-text">ค่า RGB: R={{ rgb[0] }}, G={{ rgb[1] }}, B={{ rgb[2] }}</div>
+        <div class="rgb-text">
+            ค่า RGB: R={{ "%.2f"|format(rgb[0]) }}, 
+            G={{ "%.2f"|format(rgb[1]) }}, 
+            B={{ "%.2f"|format(rgb[2]) }}
+        </div>
 
         <a href="{{ url_for('upload_page') }}" class="back-btn">⬅️ กลับไปหน้าอัปโหลด</a>
     </div>

@@ -18,7 +18,7 @@ def analyze_urine_color(image_path):
 
     h, w, _ = img.shape
     crop_size = 150
-    x1, y1 = max(w//2 - crop_size//2, 0), max(h//2 - crop_size//2, 0)
+    x1, y1 = max(w // 2 - crop_size // 2, 0), max(h // 2 - crop_size // 2, 0)
     x2, y2 = x1 + crop_size, y1 + crop_size
     roi = img[y1:y2, x1:x2]
     roi = cv2.resize(roi, (200, 200))
@@ -48,8 +48,8 @@ def analyze_nitrite_level(image_path, mode="yellow"):
 
     img = cv2.resize(img, (200, 200))
     h, w, _ = img.shape
-    x1, y1 = w//2 - 40, h//2 - 40
-    x2, y2 = w//2 + 40, h//2 + 40
+    x1, y1 = w // 2 - 40, h // 2 - 40
+    x2, y2 = w // 2 + 40, h // 2 + 40
     roi = img[y1:y2, x1:x2]
     _, g, _ = cv2.mean(roi)[:3]
 
@@ -61,7 +61,7 @@ def analyze_nitrite_level(image_path, mode="yellow"):
         CON = abs(PCON / 77.37)
 
     CON = max(CON - 0.1, 0)
-    return f"ปริมาณไนไตรต์: {CON:.2f} mg/mL"
+    return CON  # คืนค่า float ไปให้ template จัดการ
 
 @app.route('/')
 def index():
@@ -85,15 +85,17 @@ def upload():
 
     try:
         urine_result, rgb = analyze_urine_color(filepath)
-        nitrite_result = analyze_nitrite_level(filepath, mode)
+        nitrite_value = analyze_nitrite_level(filepath, mode)
     except Exception as e:
         return f"เกิดข้อผิดพลาดในการวิเคราะห์: {e}", 500
+
+    rgb_rounded = tuple(round(c, 2) for c in rgb)
 
     return render_template('result.html',
                            image_url=url_for('uploaded_file', filename=filename),
                            urine_result=urine_result,
-                           nitrite_result=nitrite_result,
-                           rgb=rgb)
+                           nitrite_value=round(nitrite_value, 2),
+                           rgb=rgb_rounded)
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
