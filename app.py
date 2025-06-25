@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, send_from_directory, redirect, url_for
+from flask import Flask, request, render_template, send_from_directory, redirect, url_for, session
 import cv2
 import numpy as np
 import os
@@ -6,10 +6,11 @@ from werkzeug.utils import secure_filename
 from datetime import datetime
 
 app = Flask(__name__)
+app.secret_key = "supersecretkey"
 
 UPLOAD_FOLDER = 'uploads'
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 def analyze_urine_color(image_path):
     img = cv2.imread(image_path)
@@ -41,7 +42,7 @@ def analyze_urine_color(image_path):
 
     return result, rgb
 
-def analyze_nitrite_level(image_path, mode="yellow"):
+def analyze_value(image_path, mode):
     img = cv2.imread(image_path)
     if img is None:
         raise ValueError("ไม่สามารถเปิดไฟล์รูปภาพได้")
@@ -53,23 +54,49 @@ def analyze_nitrite_level(image_path, mode="yellow"):
     roi = img[y1:y2, x1:x2]
     _, g, _ = cv2.mean(roi)[:3]
 
-    if mode == "white":
-        PCON = g - 248.63
+    if mode == "yellow_protein":
+        PCON = g - 208.41
+        CON = abs(PCON / 13.433)
+        result = f"ปริมาณโปรตีน (Yellow): {CON:.2f} mg/mL"
+    elif mode == "white_protein":
+        PCON = g - 250.24
         CON = abs(PCON / 35.433)
-    else:
+        result = f"ปริมาณโปรตีน (White): {CON:.2f} mg/mL"
+    elif mode == "yellow_nitrite":
         PCON = g - 208.23
         CON = abs(PCON / 77.37)
+        result = f"ปริมาณไนไตรต์ (Yellow): {CON:.2f} mg/mL"
+    elif mode == "white_nitrite":
+        PCON = g - 248.63
+        CON = abs(PCON / 35.433)
+        result = f"ปริมาณไนไตรต์ (White): {CON:.2f} mg/mL"
+    else:
+        return "โหมดไม่ถูกต้อง", 0
 
     CON = max(CON - 0.1, 0)
-    return CON  # คืนค่า float ไปให้ template จัดการ
+    return result, CON
 
 @app.route('/')
-def index():
-    return render_template('landing.html')
+def landing():
+    return render_template("landing.html")
+
+@app.route('/select-analysis-type')
+def select_analysis_type():
+    return render_template("select-analysis-type.html")
+
+@app.route('/select-protein-mode')
+def select_protein_mode():
+    return render_template("select-protein-mode.html")
+
+@app.route('/select-nitrite-mode')
+def select_nitrite_mode():
+    return render_template("select-nitrite-mode.html")
 
 @app.route('/upload-page')
 def upload_page():
-    return render_template('upload.html')
+    mode = request.args.get("mode")
+    session['mode'] = mode
+    return render_template("upload.html", mode=mode)
 
 @app.route('/upload', methods=['POST'])
 def upload():
@@ -81,11 +108,11 @@ def upload():
     filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
     file.save(filepath)
 
-    mode = request.form.get("mode", "yellow")
+    mode = session.get("mode", "yellow_protein")
 
     try:
         urine_result, rgb = analyze_urine_color(filepath)
-        nitrite_value = analyze_nitrite_level(filepath, mode)
+        value_result, value_number = analyze_value(filepath, mode)
     except Exception as e:
         return f"เกิดข้อผิดพลาดในการวิเคราะห์: {e}", 500
 
@@ -94,7 +121,7 @@ def upload():
     return render_template('result.html',
                            image_url=url_for('uploaded_file', filename=filename),
                            urine_result=urine_result,
-                           nitrite_value=round(nitrite_value, 2),
+                           value_result=value_result,
                            rgb=rgb_rounded)
 
 @app.route('/uploads/<filename>')
