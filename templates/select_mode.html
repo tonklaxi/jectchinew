@@ -12,42 +12,47 @@
             flex-direction: column;
             justify-content: center;
             height: 100vh;
-            max-width: 400px;
+            max-width: 500px;
             margin: auto;
-            padding: 1rem;
+            padding: 2rem;
             text-align: center;
         }
         h1 {
-            margin-bottom: 2rem;
+            font-size: 2.8rem;
+            margin-bottom: 2.5rem;
             color: #333;
         }
         form {
             background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.12);
         }
-        select, button {
+        select {
             width: 100%;
-            padding: 0.8rem;
-            font-size: 1.2rem;
-            margin-top: 1rem;
-            border-radius: 8px;
-            border: 1.5px solid #ccc;
+            padding: 1.2rem;
+            font-size: 1.5rem;
+            border-radius: 10px;
+            border: 1.8px solid #ccc;
             outline: none;
+            margin-top: 1rem;
             transition: border-color 0.3s ease;
         }
         select:focus {
             border-color: #4a90e2;
         }
         button {
+            width: 100%;
+            padding: 1.2rem;
+            font-size: 1.6rem;
+            margin-top: 2rem;
+            border-radius: 10px;
             background: #4a90e2;
             color: white;
-            font-weight: 700;
+            font-weight: bold;
             border: none;
             cursor: pointer;
-            margin-top: 2rem;
-            box-shadow: 0 4px 8px rgba(74,144,226,0.5);
+            box-shadow: 0 6px 12px rgba(74,144,226,0.4);
             transition: background 0.3s ease;
         }
         button:hover {
