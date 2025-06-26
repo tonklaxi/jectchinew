@@ -1,53 +1,77 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>เลือกโหมดไนไตรต์</title>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet" />
     <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
         body {
             font-family: 'Kanit', sans-serif;
-            text-align: center;
-            padding: 3rem 2rem;
             background-color: #e8f5e9;
+            font-size: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;  /* กลางแนวตั้ง */
+            align-items: center;      /* กลางแนวนอน */
+            padding: 40px;
+            box-sizing: border-box;
+            text-align: center;
         }
         h2 {
-            font-size: 2.6rem;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
             color: #2e7d32;
+        }
+        .button-row {
+            display: flex;
+            gap: 1.5rem;  /* ช่องว่างระหว่างปุ่ม */
+            justify-content: center;
+            margin-bottom: 3rem;
+            flex-wrap: wrap; /* รองรับหน้าจอเล็กให้ขึ้นบรรทัดใหม่ */
         }
         a.button {
             display: inline-block;
-            margin: 1.2rem;
-            padding: 1.2rem 2.5rem;
+            padding: 1rem 2.5rem;
             background: #4caf50;
-            color: white;
+            color: #fff;
             text-decoration: none;
-            border-radius: 0.75rem;
-            font-size: 1.6rem;
-            font-weight: bold;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            transition: background 0.3s ease;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            min-width: 160px;
+            box-shadow: 0 4px 8px rgba(76, 175, 80, 0.3);
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
         }
-        a.button:hover {
+        a.button:hover,
+        a.button:focus {
             background: #388e3c;
+            box-shadow: 0 6px 12px rgba(56, 142, 60, 0.5);
+            outline: none;
         }
         a.back {
             display: block;
-            margin-top: 3rem;
-            font-size: 1.3rem;
             color: #555;
+            font-size: 1.2rem;
             text-decoration: none;
+            transition: color 0.3s ease;
         }
-        a.back:hover {
+        a.back:hover,
+        a.back:focus {
+            color: #2e7d32;
             text-decoration: underline;
+            outline: none;
         }
     </style>
 </head>
 <body>
     <h2>เลือกโหมดวิเคราะห์ไนไตรต์</h2>
-    <a class="button" href="/upload-page?mode=yellow_nitrite">ไนไตรต์ (แถบเหลือง)</a>
-    <a class="button" href="/upload-page?mode=white_nitrite">ไนไตรต์ (แถบขาว)</a>
+    <div class="button-row">
+        <a class="button" href="/upload-page?mode=yellow_nitrite">Yellow Nitrite</a>
+        <a class="button" href="/upload-page?mode=white_nitrite">White Nitrite</a>
+    </div>
     <a class="back" href="/select-analysis-type">⬅️ ย้อนกลับ</a>
 </body>
 </html>

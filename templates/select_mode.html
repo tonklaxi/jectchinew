@@ -5,28 +5,33 @@
     <title>เลือกโหมดวิเคราะห์</title>
     <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet" />
     <style>
-        body {
+        html, body {
+            height: 100%;
+            margin: 0;
             font-family: 'Kanit', sans-serif;
             background: #eef3f7;
+        }
+        body {
             display: flex;
-            flex-direction: column;
-            justify-content: center;
-            height: 100vh;
-            max-width: 500px;
-            margin: auto;
-            padding: 2rem;
+            justify-content: center; /* แนวนอนกลางจอ */
+            align-items: center;     /* แนวตั้งกลางจอ */
+            padding: 40px;           /* เว้นระยะห่างจากขอบบน-ล่าง-ซ้าย-ขวาเท่ากัน */
+            box-sizing: border-box;
+            height: 100vh;           /* เต็มความสูงหน้าจอ */
             text-align: center;
+        }
+        form {
+            background: white;
+            padding: 2.5rem 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+            max-width: 420px;
+            width: 100%;
         }
         h1 {
             font-size: 2.8rem;
             margin-bottom: 2.5rem;
             color: #333;
-        }
-        form {
-            background: white;
-            padding: 2.5rem;
-            border-radius: 15px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.12);
         }
         select {
             width: 100%;
@@ -40,6 +45,7 @@
         }
         select:focus {
             border-color: #4a90e2;
+            box-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
         }
         button {
             width: 100%;
@@ -55,14 +61,16 @@
             box-shadow: 0 6px 12px rgba(74,144,226,0.4);
             transition: background 0.3s ease;
         }
-        button:hover {
+        button:hover,
+        button:focus {
             background: #357abd;
+            outline: none;
         }
     </style>
 </head>
 <body>
-    <h1>เลือกโหมดวิเคราะห์</h1>
     <form method="post" action="/select-mode">
+        <h1>เลือกโหมดวิเคราะห์</h1>
         <select name="mode" required>
             <option value="" disabled selected>-- กรุณาเลือกโหมด --</option>
             <option value="yellow_protein">โปรตีน (ฉี่เหลือง)</option>

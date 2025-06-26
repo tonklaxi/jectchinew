@@ -5,11 +5,23 @@
     <title>เลือกประเภทการวิเคราะห์</title>
     <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet">
     <style>
-        body {
+        html, body {
+            height: 100%;
+            margin: 0;
             font-family: 'Kanit', sans-serif;
+            background: #f2f2f2;
+        }
+        body {
+            display: flex;
+            justify-content: center; /* กึ่งกลางแนวนอน */
+            align-items: center;    /* กึ่งกลางแนวตั้ง */
             text-align: center;
             padding: 3rem 2rem;
-            background: #f2f2f2;
+        }
+        .container {
+            /* เพื่อควบคุมความกว้าง ไม่ให้กว้างเกินไป */
+            max-width: 400px;
+            width: 100%;
         }
         h2 {
             font-size: 2.8rem;
@@ -45,9 +57,11 @@
     </style>
 </head>
 <body>
-    <h2>เลือกประเภทที่ต้องการวิเคราะห์</h2>
-    <a class="button" href="/select-protein-mode">โปรตีน</a>
-    <a class="button" href="/select-nitrite-mode">ไนไตรต์</a>
-    <a class="back" href="/">⬅️ ย้อนกลับ</a>
+    <div class="container">
+        <h2>เลือกประเภทที่ต้องการวิเคราะห์</h2>
+        <a class="button" href="/select-protein-mode">โปรตีน</a>
+        <a class="button" href="/select-nitrite-mode">ไนไตรต์</a>
+        <a class="back" href="/">⬅️ ย้อนกลับ</a>
+    </div>
 </body>
 </html>

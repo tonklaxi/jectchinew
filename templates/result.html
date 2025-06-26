@@ -1,24 +1,35 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>ผลการวิเคราะห์</title>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet" />
     <style>
         html, body {
             height: 100%;
             margin: 0;
+            background-color: #fdfdfd;
+            font-family: 'Kanit', sans-serif;
         }
         body {
-            font-family: 'Kanit', sans-serif;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
+            justify-content: center; /* กลางแนวนอน */
+            align-items: center;     /* กลางแนวตั้ง */
+            padding: 2rem;           /* เว้นขอบรอบด้าน */
+            box-sizing: border-box;
             text-align: center;
-            background-color: #fdfdfd;
-            padding: 2rem;
             font-size: 1.5rem;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 1.2rem;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            padding: 2.5rem 3rem; /* เว้นขอบใน container เท่ากัน รอบ ๆ */
+            box-sizing: border-box;
         }
         h2 {
             font-size: 2.8rem;
@@ -26,22 +37,18 @@
             margin-bottom: 2rem;
         }
         img {
-            width: 320px;
+            width: 100%;
+            max-width: 320px;
             height: auto;
             border-radius: 1rem;
             box-shadow: 0 0 12px rgba(0,0,0,0.2);
             margin-bottom: 2rem;
         }
         .result-box {
-            background: #ffffff;
-            padding: 2rem;
-            margin: 1.5rem auto;
-            max-width: 600px;
-            border-radius: 1.2rem;
-            box-shadow: 0 0 15px rgba(0,0,0,0.1);
             font-size: 1.6rem;
             font-weight: 600;
             color: #333;
+            margin-bottom: 1.5rem;
         }
         .rgb-box {
             margin-top: 1rem;
@@ -61,6 +68,7 @@
             border-radius: 0.6rem;
             font-size: 1.4rem;
             font-weight: bold;
+            transition: background 0.3s ease;
         }
         a:hover {
             background: #218838;
@@ -74,19 +82,21 @@
     </style>
 </head>
 <body>
-    <h2>ผลการวิเคราะห์ปัสสาวะ</h2>
-    <img src="{{ image_url }}" alt="อัปโหลดรูป">
+    <div class="container">
+        <h2>ผลการวิเคราะห์ปัสสาวะ</h2>
+        <img src="{{ image_url }}" alt="อัปโหลดรูป">
 
-    <div class="result-box">
-        <p><strong>ผลการวิเคราะห์:</strong> {{ value_result }}</p>
-        <div class="rgb-box">
-            ค่า RGB: {{ rgb }}
+        <div class="result-box">
+            <p><strong>ผลการวิเคราะห์:</strong> {{ value_result }}</p>
+            <div class="rgb-box">
+                ค่า RGB: {{ rgb }}
+            </div>
         </div>
-    </div>
 
-    <div class="buttons">
-        <a href="/">กลับหน้าแรก</a>
-        <a class="back" href="/upload-page?mode={{ mode }}">ย้อนกลับ</a>
+        <div class="buttons">
+            <a href="/">กลับหน้าแรก</a>
+            <a class="back" href="/upload-page?mode={{ mode }}">ย้อนกลับ</a>
+        </div>
     </div>
 </body>
 </html>
