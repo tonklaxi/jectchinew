@@ -17,27 +17,78 @@
             align-items: center;
             background: linear-gradient(to bottom, #e0f7fa, #ffffff);
             font-size: 1.5rem;
+            padding: 2rem;
         }
         h1 {
             font-size: 3rem;
             color: #00796b;
         }
-        a {
-            margin-top: 2rem;
-            padding: 1.2rem 2.5rem;
+        .btn {
+            margin-top: 1.5rem;
+            padding: 1rem 2.5rem;
             background: #00796b;
             color: white;
             text-decoration: none;
             border-radius: 0.5rem;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
+            cursor: pointer;
+            font-family: 'Kanit', sans-serif;
+            transition: background 0.3s;
         }
-        a:hover {
+        .btn:hover {
             background: #004d40;
+        }
+        .tip-card {
+            margin-top: 2rem;
+            background: #e0f2f1; /* เขียวอ่อน */
+            border-left: 6px solid #00796b; /* ขอบเขียวเข้ม */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem 2rem;
+            border-radius: 1rem;
+            max-width: 520px;
+            text-align: left;
+            display: none;
+            animation: fadeInUp 0.4s ease-out;
+            font-family: 'Kanit', sans-serif;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .tip-card h2 {
+            margin-top: 0;
+            font-size: 1.4rem;
+            color: #004d40;
+        }
+        .tip-card p {
+            margin: 0.5rem 0 0;
+            font-size: 1.1rem;
+            color: #004d40;
         }
     </style>
 </head>
 <body>
     <h1>วิเคราะห์ปัสสาวะด้วยภาพถ่าย</h1>
-    <a href="/select-analysis-type">เริ่มวิเคราะห์</a>
+    <a class="btn" href="/select-analysis-type">เริ่มวิเคราะห์</a>
+    <button class="btn" onclick="showTip()">คำแนะนำ</button>
+
+    <!-- กล่องคำแนะนำ -->
+    <div class="tip-card" id="tipBox">
+        <h2>💡 คำแนะนำ</h2>
+        <p>ถ่ายภาพในที่สว่าง วางตัวอย่างบนพื้นหลังสีขาว เพื่อให้ระบบวิเคราะห์ได้แม่นยำมากที่สุด</p>
+    </div>
+
+    <script>
+        function showTip() {
+            const tip = document.getElementById("tipBox");
+            tip.style.display = "block";
+        }
+    </script>
 </body>
 </html>
