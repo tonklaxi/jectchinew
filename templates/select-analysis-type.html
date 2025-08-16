@@ -1,67 +1,79 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <title>เลือกประเภทการวิเคราะห์</title>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet">
-    <style>
-        html, body {
-            height: 100%;
-            margin: 0;
-            font-family: 'Kanit', sans-serif;
-            background: #f2f2f2;
-        }
-        body {
-            display: flex;
-            justify-content: center; /* กึ่งกลางแนวนอน */
-            align-items: center;    /* กึ่งกลางแนวตั้ง */
-            text-align: center;
-            padding: 3rem 2rem;
-        }
-        .container {
-            /* เพื่อควบคุมความกว้าง ไม่ให้กว้างเกินไป */
-            max-width: 400px;
-            width: 100%;
-        }
-        h2 {
-            font-size: 2.8rem;
-            margin-bottom: 3rem;
-            color: #333;
-        }
-        a.button {
-            display: inline-block;
-            margin: 1.2rem;
-            padding: 1.2rem 2.5rem;
-            background: #2196f3;
-            color: white;
-            text-decoration: none;
-            border-radius: 0.75rem;
-            font-size: 1.6rem;
-            font-weight: bold;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            transition: background 0.3s ease;
-        }
-        a.button:hover {
-            background: #1976d2;
-        }
-        a.back {
-            display: block;
-            margin-top: 3rem;
-            font-size: 1.3rem;
-            color: #666;
-            text-decoration: none;
-        }
-        a.back:hover {
-            text-decoration: underline;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>เลือกประเภทการวิเคราะห์</title>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg1:#ffe7ef;
+      --bg2:#fffafb;
+      --card:#ffffff;
+      --text:#2b2b2b;
+      --muted:#6b7280;
+      --primary:#6C63FF;
+      --primary-strong:#4F46E5;
+      --shadow: 0 20px 45px rgba(0,0,0,.08);
+      --radius: 24px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;min-height:100vh;
+      font-family:'Kanit',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Noto Sans",sans-serif;
+      background: radial-gradient(1200px 600px at 20% -10%, #ffd4e2 0%, transparent 60%),
+                  radial-gradient(1200px 700px at 100% 0%, #ffeef6 0%, transparent 55%),
+                  linear-gradient(180deg, var(--bg1), var(--bg2));
+      display:grid;place-items:center;color:var(--text);
+      padding:24px;
+    }
+    .wrap{width:min(920px,92vw)}
+    .card{
+      background:linear-gradient(180deg,#fffefe, #fff9fc 60%, #ffffff);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:clamp(20px,5vw,42px);
+    }
+    .steps{display:flex;gap:10px;margin-bottom:22px}
+    .step{
+      height:8px;flex:1;border-radius:999px;background:#ffd5e7;opacity:.6
+    }
+    .step.active{background:#ff92bb;opacity:1}
+    h2{margin:2px 0 10px 0;font-size:clamp(20px,3vw,28px)}
+    .sub{color:var(--muted);margin:0 0 18px 0;line-height:1.6}
+    .actions{display:grid;grid-template-columns:1fr;gap:14px;margin-top:12px}
+    .btn{
+      display:block;text-align:center;text-decoration:none;
+      padding:16px;border-radius:18px;font-weight:600;
+      background:#f3f4ff;color:#4338CA;border:1px solid #e9e8ff;
+      transition:transform .06s ease, box-shadow .2s ease;
+    }
+    .btn:hover{transform:translateY(-1px);box-shadow:0 10px 24px rgba(79,70,229,.15)}
+    .cta{
+      margin-top:12px;
+      display:inline-block;padding:16px 22px;border-radius:999px;
+      background:linear-gradient(90deg,var(--primary),var(--primary-strong));color:#fff;
+      text-decoration:none;font-weight:600;box-shadow:0 10px 25px rgba(79,70,229,.35);
+    }
+    .back{display:block;text-align:center;margin-top:16px;color:#6b7280;text-decoration:none}
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h2>เลือกประเภทที่ต้องการวิเคราะห์</h2>
-        <a class="button" href="/select-protein-mode">โปรตีน</a>
-        <a class="button" href="/select-nitrite-mode">ไนไตรต์</a>
-        <a class="back" href="/">⬅️ ย้อนกลับ</a>
+  <div class="wrap">
+    <div class="card">
+      <div class="steps" aria-label="progress">
+        <div class="step active"></div>
+        <div class="step"></div>
+        <div class="step"></div>
+      </div>
+      <h2>เลือกประเภทที่ต้องการวิเคราะห์</h2>
+      <p class="sub">ระบบจะวิเคราะห์สีในภาพเพื่อนำไปคำนวณค่าที่สัมพันธ์กับสารเป้าหมาย</p>
+      <div class="actions">
+        <a class="btn" href="/select-protein-mode">โปรตีน (Protein)</a>
+        <a class="btn" href="/select-nitrite-mode">ไนไตรต์ (Nitrite)</a>
+      </div>
+      <a class="back" href="/">ย้อนกลับ</a>
     </div>
+  </div>
 </body>
 </html>

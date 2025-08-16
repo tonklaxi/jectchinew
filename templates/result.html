@@ -1,102 +1,96 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8" />
-    <title>ผลการวิเคราะห์</title>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet" />
-    <style>
-        html, body {
-            height: 100%;
-            margin: 0;
-            background-color: #fdfdfd;
-            font-family: 'Kanit', sans-serif;
-        }
-        body {
-            display: flex;
-            justify-content: center; /* กลางแนวนอน */
-            align-items: center;     /* กลางแนวตั้ง */
-            padding: 2rem;           /* เว้นขอบรอบด้าน */
-            box-sizing: border-box;
-            text-align: center;
-            font-size: 1.5rem;
-            min-height: 100vh;
-            flex-direction: column;
-        }
-        .container {
-            max-width: 600px;
-            width: 100%;
-            background: #ffffff;
-            border-radius: 1.2rem;
-            box-shadow: 0 0 15px rgba(0,0,0,0.1);
-            padding: 2.5rem 3rem; /* เว้นขอบใน container เท่ากัน รอบ ๆ */
-            box-sizing: border-box;
-        }
-        h2 {
-            font-size: 2.8rem;
-            color: #00796b;
-            margin-bottom: 2rem;
-        }
-        img {
-            width: 100%;
-            max-width: 320px;
-            height: auto;
-            border-radius: 1rem;
-            box-shadow: 0 0 12px rgba(0,0,0,0.2);
-            margin-bottom: 2rem;
-        }
-        .result-box {
-            font-size: 1.6rem;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 1.5rem;
-        }
-        .rgb-box {
-            margin-top: 1rem;
-            font-size: 1.2rem;
-            color: #666;
-        }
-        .buttons {
-            margin-top: 3rem;
-        }
-        a {
-            display: inline-block;
-            margin: 0 1rem;
-            padding: 1rem 2rem;
-            background: #28a745;
-            color: white;
-            text-decoration: none;
-            border-radius: 0.6rem;
-            font-size: 1.4rem;
-            font-weight: bold;
-            transition: background 0.3s ease;
-        }
-        a:hover {
-            background: #218838;
-        }
-        a.back {
-            background: #6c757d;
-        }
-        a.back:hover {
-            background: #5a6268;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ผลการวิเคราะห์</title>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg1:#ffe7ef;
+      --bg2:#fffafb;
+      --card:#ffffff;
+      --text:#2b2b2b;
+      --muted:#6b7280;
+      --primary:#6C63FF;
+      --primary-strong:#4F46E5;
+      --shadow: 0 20px 45px rgba(0,0,0,.08);
+      --radius: 24px;
+      --chip:#f3f4ff;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;min-height:100vh;
+      font-family:'Kanit',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Noto Sans",sans-serif;
+      background: radial-gradient(1200px 600px at 20% -10%, #ffd4e2 0%, transparent 60%),
+                  radial-gradient(1200px 700px at 100% 0%, #ffeef6 0%, transparent 55%),
+                  linear-gradient(180deg, var(--bg1), var(--bg2));
+      display:grid;place-items:center;color:var(--text);
+      padding:24px;
+    }
+    .wrap{width:min(980px,94vw)}
+    .card{
+      background:linear-gradient(180deg,#fffefe, #fff9fc 60%, #ffffff);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:clamp(20px,5vw,42px);
+    }
+    h2{margin:0 0 14px 0;font-size:clamp(20px,3vw,28px)}
+    .grid{display:grid;gap:22px}
+    @media(min-width:900px){ .grid{grid-template-columns:1.2fr 1fr} }
+    .imgbox{border:1px solid #f1eefc;border-radius:18px;overflow:hidden;background:#fff}
+    .imgbox img{width:100%;display:block}
+    .sec h3{margin:0 0 8px 0;font-size:18px}
+    .muted{color:var(--muted)}
+    .chips{display:flex;gap:10px;flex-wrap:wrap}
+    .chip{background:var(--chip);border:1px solid #e9e8ff;padding:8px 12px;border-radius:999px}
+    .value{
+      margin-top:8px;
+      padding:14px 16px;border-radius:16px;
+      background:#f9f5ff;border:1px solid #efe9ff
+    }
+    .actions{display:flex;gap:12px;align-items:center;margin-top:18px;flex-wrap:wrap}
+    .cta{
+      display:inline-block;padding:14px 22px;border-radius:999px;
+      background:linear-gradient(90deg,var(--primary),var(--primary-strong));color:#fff;
+      text-decoration:none;font-weight:600;box-shadow:0 10px 25px rgba(79,70,229,.35);
+      border:0;cursor:pointer;
+    }
+    .ghost{
+      display:inline-block;padding:12px 18px;border-radius:999px;
+      background:#f3f4ff;border:1px solid #e9e8ff;color:#4338CA;text-decoration:none;font-weight:600;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h2>ผลการวิเคราะห์ปัสสาวะ</h2>
-        <img src="{{ image_url }}" alt="อัปโหลดรูป">
-
-        <div class="result-box">
-            <p><strong>ผลการวิเคราะห์:</strong> {{ value_result }}</p>
-            <div class="rgb-box">
-                ค่า RGB: {{ rgb }}
-            </div>
+  <div class="wrap">
+    <div class="card">
+      <h2>ผลการวิเคราะห์</h2>
+      <div class="grid">
+        <div class="imgbox">
+          <img src="{{ image_url }}" alt="ภาพที่ใช้ในการวิเคราะห์">
         </div>
-
-        <div class="buttons">
-            <a href="/">กลับหน้าแรก</a>
-            <a class="back" href="/upload-page?mode={{ mode }}">ย้อนกลับ</a>
+        <div class="sec">
+          <h3>สรุปผล</h3>
+          {% if urine_result %}
+          <div class="value">{{ urine_result }}</div>
+          {% endif %}
+          {% if value_result %}
+          <div class="value">{{ value_result }}</div>
+          {% endif %}
+          <h3>ข้อมูลสี (RGB)</h3>
+          <div class="chips">
+            <span class="chip">R: {{ rgb[0] }}</span>
+            <span class="chip">G: {{ rgb[1] }}</span>
+            <span class="chip">B: {{ rgb[2] }}</span>
+          </div>
+          <div class="actions">
+            <a class="cta" href="/select-analysis-type">วิเคราะห์ใหม่</a>
+            <a class="ghost" href="/upload-page">อัปโหลดอีกภาพ</a>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </body>
 </html>

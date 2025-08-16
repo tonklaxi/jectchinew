@@ -1,94 +1,174 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <title>เริ่มวิเคราะห์ปัสสาวะ</title>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet">
-    <style>
-        html, body {
-            height: 100%;
-            margin: 0;
-        }
-        body {
-            font-family: 'Kanit', sans-serif;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(to bottom, #e0f7fa, #ffffff);
-            font-size: 1.5rem;
-            padding: 2rem;
-        }
-        h1 {
-            font-size: 3rem;
-            color: #00796b;
-        }
-        .btn {
-            margin-top: 1.5rem;
-            padding: 1rem 2.5rem;
-            background: #00796b;
-            color: white;
-            text-decoration: none;
-            border-radius: 0.5rem;
-            font-size: 1.4rem;
-            cursor: pointer;
-            font-family: 'Kanit', sans-serif;
-            transition: background 0.3s;
-        }
-        .btn:hover {
-            background: #004d40;
-        }
-        .tip-card {
-            margin-top: 2rem;
-            background: #e0f2f1; /* เขียวอ่อน */
-            border-left: 6px solid #00796b; /* ขอบเขียวเข้ม */
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            padding: 1.5rem 2rem;
-            border-radius: 1rem;
-            max-width: 520px;
-            text-align: left;
-            display: none;
-            animation: fadeInUp 0.4s ease-out;
-            font-family: 'Kanit', sans-serif;
-        }
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        .tip-card h2 {
-            margin-top: 0;
-            font-size: 1.4rem;
-            color: #004d40;
-        }
-        .tip-card p {
-            margin: 0.5rem 0 0;
-            font-size: 1.1rem;
-            color: #004d40;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>เริ่มวิเคราะห์ปัสสาวะ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg1:#ffe7ef;
+      --bg2:#fffafb;
+      --text:#2b2b2b;
+      --muted:#6b7280;
+      --primary:#6C63FF;
+      --primary-strong:#4F46E5;
+      --pill:#f7f0ff;
+      --shadow: 0 20px 45px rgba(0,0,0,.08);
+      --radius: 24px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; min-height:100vh;
+      font-family:'Kanit',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Noto Sans",sans-serif;
+      background:
+        radial-gradient(1200px 600px at 20% -10%, #ffd4e2 0%, transparent 60%),
+        radial-gradient(1200px 700px at 100% 0%, #ffeef6 0%, transparent 55%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+      display:grid; place-items:center; color:var(--text);
+      padding-bottom:72px; /* กัน footer fixed-bottom ทับเนื้อหา */
+    }
+    .hero{
+      width:min(920px,92vw);
+      background:linear-gradient(180deg,#fffefe,#fff9fc 60%,#ffffff);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:clamp(20px,5vw,48px);
+      text-align:center;
+      overflow:hidden;
+    }
+
+    /* โลโก้ใหญ่ขึ้นและชิดข้อความ */
+    .logo{
+      width:140px; height:140px; margin:0 auto 8px auto;
+      display:grid; place-items:center; background:transparent; box-shadow:none;
+    }
+    .logo .mark{width:100%; height:100%; object-fit:contain;}
+
+    h1{ margin:4px 0 8px 0; font-weight:700; letter-spacing:.2px; font-size:clamp(22px,3.4vw,34px) }
+    .sub{
+      margin:0 auto 22px auto; color:var(--muted);
+      font-size:clamp(14px,2.2vw,18px); max-width:58ch; line-height:1.6;
+    }
+
+    .cta-row{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-bottom:4px; }
+    .cta{
+      display:inline-block; padding:16px 26px; border-radius:999px; font-weight:600; text-decoration:none;
+      background:linear-gradient(90deg,var(--primary),var(--primary-strong)); color:#fff;
+      box-shadow:0 10px 25px rgba(79,70,229,.35); transition:transform .06s ease, box-shadow .2s ease;
+    }
+    .cta:hover{ transform:translateY(-1px); box-shadow:0 12px 28px rgba(79,70,229,.45) }
+
+    /* ปุ่มคำแนะนำ */
+    .guide-btn{
+      padding:14px 20px; border-radius:999px; font-weight:600; cursor:pointer;
+      background:#f3f4ff; color:#4338CA; border:1px solid #e9e8ff;
+      box-shadow:0 6px 16px rgba(79,70,229,.12);
+    }
+    .guide-btn:hover{ transform:translateY(-1px); box-shadow:0 10px 20px rgba(79,70,229,.18) }
+
+    .partners{ display:flex; gap:18px; justify-content:center; align-items:center; margin-top:28px; color:#a3a3a3; font-size:14px }
+    .pill{ background:var(--pill); padding:6px 12px; border-radius:999px; font-size:12px; color:#7c3aed }
+
+    /* ===== Advice modal ===== */
+    .advice{ position:fixed; inset:0; display:none; align-items:center; justify-content:center; z-index:150; background:rgba(0,0,0,.28); padding:16px; }
+    .advice .box{
+      width:min(92vw,520px); background:linear-gradient(180deg,#fff,#fff9fc);
+      border:1px solid #f1eefc; border-radius:16px; box-shadow:0 18px 40px rgba(0,0,0,.18);
+      padding:18px 18px 14px 18px; text-align:center;
+    }
+    .advice h3{ margin:0 0 6px 0; font-size:18px }
+    .advice p{ margin:0 0 12px 0; color:#4b5563 }
+    .advice .close{
+      display:inline-block; padding:10px 16px; border-radius:999px; font-weight:600; cursor:pointer;
+      background:#f3f4ff; color:#4338CA; border:1px solid #e9e8ff;
+    }
+
+    /* ===== Footer: fixed-bottom สองบรรทัด ===== */
+    .site-footer{
+      position:fixed; left:0; right:0; bottom:0; z-index:100;
+      padding:0 8px;
+    }
+    .footer-card{
+      margin:0 auto;
+      display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;
+      background:rgba(255,255,255,.95);
+      border:1px solid #f1eefc;
+      padding:6px 10px;                 /* กรอบเล็กติดพื้น */
+      border-radius:12px 12px 0 0;
+      box-shadow:0 -2px 16px rgba(0,0,0,.06);
+      font-size:12px; line-height:1.45; color:#4b5563;
+      max-width:calc(100vw - 16px);
+    }
+    .footer-card p{ margin:0; }
+    .footer-card .row{
+      display:flex; align-items:center; gap:10px;
+      white-space:nowrap; max-width:100%;
+      overflow-x:auto; scrollbar-width:none;
+    }
+    .footer-card .row::-webkit-scrollbar{ display:none }
+    .footer-card .row.info{ color:#6b7280; font-weight:400; }
+    .footer-card .row.credit{ color:#94a3b8; font-weight:400; font-size:11.5px; letter-spacing:.1px; }
+    .school{ font-weight:500; color:#4F46E5 }
+    .sep{ opacity:.35 }
+  </style>
 </head>
 <body>
-    <h1>วิเคราะห์ปัสสาวะด้วยภาพถ่าย</h1>
-    <a class="btn" href="/select-analysis-type">เริ่มวิเคราะห์</a>
-    <button class="btn" onclick="showTip()">คำแนะนำ</button>
+  <main class="hero" role="main">
+    <div class="logo">
+      <img class="mark" src="{{ url_for('static', filename='logo-transparent.png') }}" alt="แอปวิเคราะห์ปัสสาวะ">
+    </div>
+    <h1>วิเคราะห์ปัสสาวะจากภาพถ่าย</h1>
+    <p class="sub">ประเมินสีและค่าที่สัมพันธ์กับโปรตีน/ไนไตรต์จากพื้นที่กึ่งกลางของภาพ โดยใช้ขั้นตอนการประมวลผลภาพภายในเครื่อง</p>
 
-    <!-- กล่องคำแนะนำ -->
-    <div class="tip-card" id="tipBox">
-        <h2>💡 คำแนะนำ</h2>
-        <p>ถ่ายภาพในที่สว่าง วางตัวอย่างบนพื้นหลังสีขาว เพื่อให้ระบบวิเคราะห์ได้แม่นยำมากที่สุด</p>
+    <div class="cta-row">
+      <a class="cta" href="/select-analysis-type">เริ่มตรวจวิเคราะห์</a>
+      <button id="openAdvice" class="guide-btn" type="button" aria-haspopup="dialog" aria-controls="advice">คำแนะนำ</button>
     </div>
 
-    <script>
-        function showTip() {
-            const tip = document.getElementById("tipBox");
-            tip.style.display = "block";
-        }
-    </script>
+  </main>
+
+  <!-- Advice modal -->
+  <div id="advice" class="advice" role="dialog" aria-modal="true" aria-labelledby="adviceTitle" style="display:none">
+    <div class="box">
+      <h3 id="adviceTitle">คำแนะนำ</h3>
+      <p>ควรใช้ฉากหลังสีเขียวหากนำปัสสาวะที่มีสีเหลืองมาทดสอบ</p>
+      <button id="closeAdvice" class="close" type="button">ปิด</button>
+    </div>
+  </div>
+
+  <!-- Footer 2 บรรทัด -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-card">
+      <div class="row info">
+        <p class="school">โรงเรียนเซนต์หลุยส์ฉะเชิงเทรา</p><span class="sep">•</span>
+        <p>128 ถ.ศุภกิจ ต.หน้าเมือง อ.เมือง จ.ฉะเชิงเทรา 24000</p><span class="sep">•</span>
+        <p>ติดต่อ : 038-535-481</p><span class="sep">•</span>
+        <p>Facebook : Saint Louis Chachoengsao</p>
+      </div>
+      <div class="row credit">
+        <p>เรียบเรียงโดย นายณัฐกร ผจญภัย • นายปาลภาวิต เปี่ยมประถม</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // เปิด/ปิดกล่องคำแนะนำ
+    const advice = document.getElementById('advice');
+    document.getElementById('openAdvice').addEventListener('click', () => {
+      advice.style.display = 'flex';
+    });
+    document.getElementById('closeAdvice').addEventListener('click', () => {
+      advice.style.display = 'none';
+    });
+    // ปิดเมื่อคลิกนอกกล่อง
+    advice.addEventListener('click', (e) => {
+      if (e.target === advice) advice.style.display = 'none';
+    });
+    // ปิดด้วยปุ่ม ESC
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') advice.style.display = 'none';
+    });
+  </script>
 </body>
 </html>
