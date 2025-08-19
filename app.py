@@ -72,7 +72,7 @@ def analyze_value(image_path, mode: str):
         result = f"ปริมาณโปรตีน (Yellow): {CON:.2f} mg/mL"
     elif mode == "white_protein":
         PCON = g - 250.24
-        CON = abs(PCON / 35.433)
+        CON = abs(PCON / 35.894)
         result = f"ปริมาณโปรตีน (White): {CON:.2f} mg/mL"
     elif mode == "yellow_nitrite":
         PCON = g - 208.23
@@ -80,7 +80,7 @@ def analyze_value(image_path, mode: str):
         result = f"ปริมาณไนไตรต์ (Yellow): {CON:.2f} mg/mL"
     elif mode == "white_nitrite":
         PCON = g - 248.63
-        CON = abs(PCON / 35.433)
+        CON = abs(PCON / 35.894)
         result = f"ปริมาณไนไตรต์ (White): {CON:.2f} mg/mL"
     else:
         return "โหมดไม่ถูกต้อง", 0
